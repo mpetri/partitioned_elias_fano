@@ -1,3 +1,5 @@
+
+#include <chrono>
 #include <iostream>
 
 #include <succinct/mapper.hpp>
@@ -16,15 +18,20 @@ void op_perftest(IndexType const& index,
                  size_t runs)
 {
     using namespace quasi_succinct;
+    using namespace std::chrono;
 
     std::vector<double> query_times;
 
     for (size_t run = 0; run <= runs; ++run) {
         for (auto const& query: queries) {
-            auto tick = get_time_usecs();
+            auto start = high_resolution_clock::now();
+
             uint64_t result = query_op(index, query);
             do_not_optimize_away(result);
-            double elapsed = double(get_time_usecs() - tick);
+
+            auto end = high_resolution_clock::now();
+            double elapsed = duration_cast<duration<double>>(end - start).count();
+
             if (run != 0) { // first run is not timed
                 query_times.push_back(elapsed);
             }
@@ -61,7 +68,7 @@ void op_perftest(IndexType const& index,
 
 template <typename IndexType>
 void perftest(const char* index_filename,
-              const char* wand_data_filename,
+              const char* /*wand_data_filename*/,
               std::vector<quasi_succinct::term_id_vec> const& queries,
               std::string const& type)
 {
@@ -74,20 +81,19 @@ void perftest(const char* index_filename,
 
     logger() << "Performing " << type << " queries" << std::endl;
     op_perftest(index, and_query<false>(), queries, type, "and", 3);
-    op_perftest(index, and_query<true>(), queries, type, "and_freq", 3);
-    op_perftest(index, or_query<false>(), queries, type, "or", 1);
-    op_perftest(index, or_query<true>(), queries, type, "or_freq", 1);
+//    op_perftest(index, and_query<true>(), queries, type, "and_freq", 3);
+//    op_perftest(index, or_query<false>(), queries, type, "or", 1);
+//    op_perftest(index, or_query<true>(), queries, type, "or_freq", 1);
 
-    if (wand_data_filename) {
-        wand_data<> wdata;
-        boost::iostreams::mapped_file_source md(wand_data_filename);
-        succinct::mapper::map(wdata, md, succinct::mapper::map_flags::warmup);
-        op_perftest(index, ranked_and_query(wdata, 10), queries, type, "ranked_and", 3);
-        op_perftest(index, ranked_or_query(wdata, 10), queries, type, "ranked_or", 1);
-        op_perftest(index, wand_query(wdata, 10), queries, type, "wand", 1);
-        op_perftest(index, maxscore_query(wdata, 10), queries, type, "maxscore", 1);
-    }
-
+//    if (wand_data_filename) {
+//        wand_data<> wdata;
+//        boost::iostreams::mapped_file_source md(wand_data_filename);
+//        succinct::mapper::map(wdata, md, succinct::mapper::map_flags::warmup);
+//        op_perftest(index, ranked_and_query(wdata, 10), queries, type, "ranked_and", 3);
+//        op_perftest(index, ranked_or_query(wdata, 10), queries, type, "ranked_or", 1);
+//        op_perftest(index, wand_query(wdata, 10), queries, type, "wand", 1);
+//        op_perftest(index, maxscore_query(wdata, 10), queries, type, "maxscore", 1);
+//    }
 }
 
 using namespace quasi_succinct;
