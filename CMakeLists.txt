@@ -6,7 +6,7 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 if(NOT CMAKE_BUILD_TYPE)
-  set(CMAKE_BUILD_TYPE "Release")
+  set(CMAKE_BUILD_TYPE "Debug")
 endif()
 
 if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
@@ -68,10 +68,17 @@ target_link_libraries(create_wand_data
 
 add_executable(queries queries.cpp)
 target_link_libraries(queries
-  ${Boost_LIBRARIES}
-  FastPFor_lib
-  block_codecs
-  )
+        ${Boost_LIBRARIES}
+        FastPFor_lib
+        block_codecs
+        )
+
+add_executable(querylogrunner query_log_runner.cpp query_log_runner.h)
+target_link_libraries(querylogrunner
+        ${Boost_LIBRARIES}
+        FastPFor_lib
+        block_codecs
+        )
 
 enable_testing()
 add_subdirectory(test)

@@ -24,3 +24,11 @@ lib/
 \#*\#
 .\#*
 
+# Code::Blocks
+INDEX_PARTITIONING.cbp
+
+# JetBrains
+.idea/
+
+
+
