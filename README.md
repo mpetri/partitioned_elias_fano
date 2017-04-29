@@ -1,9 +1,9 @@
-For of partitioned_elias_fano
+Fork of partitioned_elias_fano
 =============================
 
 This is a fork of [partitioned_elias_fano](https://github.com/ot/partitioned_elias_fano).
-Modifications in this repository fix build breaks on Ubuntu 16.04 LTS and clean upupdate the
-build system to avoid generate executables and libraries in the source tree.
+Modifications in this repository fix build breaks on Ubuntu 16.04 LTS and update the
+build system to avoid generating executables and libraries in the source tree.
 
 Building on Ubuntu 16.04 LTS
 ----------------------------
