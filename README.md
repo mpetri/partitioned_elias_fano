@@ -1,3 +1,26 @@
+For of partitioned_elias_fano
+=============================
+
+This is a fork of [partitioned_elias_fano](https://github.com/ot/partitioned_elias_fano).
+Modifications in this repository fix build breaks on Ubuntu 16.04 LTS and clean upupdate the
+build system to avoid generate executables and libraries in the source tree.
+
+Building on Ubuntu 16.04 LTS
+----------------------------
+
+Please note that this repository depends on submodules, so it helps to clone with the `--recursive` flag.
+
+~~~
+sudo apt-get install libboost-all-dev
+git clone --recursive git@github.com:BitFunnel/partitioned_elias_fano.git
+cmake . -DCMAKE_BUILD_TYPE=Release
+make
+~~~
+
+Original README.md follows.
+
+---
+
 partitioned_elias_fano
 ======================
 

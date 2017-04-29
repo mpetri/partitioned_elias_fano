@@ -5,6 +5,7 @@ foreach(TEST_SRC ${TEST_SOURCES})
   target_link_libraries(${TEST_SRC_NAME}
     succinct
     ${Boost_LIBRARIES}
+    -lpthread
     )
   add_test(${TEST_SRC_NAME} ${TEST_SRC_NAME})
 endforeach(TEST_SRC)

@@ -17,3 +17,10 @@ CMakeFiles/
 *.cmake
 Makefile
 Testing/
+bin/
+lib/
+
+# Emacs
+\#*\#
+.\#*
+

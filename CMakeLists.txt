@@ -1,6 +1,10 @@
 cmake_minimum_required(VERSION 2.8)
 project(INDEX_PARTITIONING)
 
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+
 if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE "Release")
 endif()
@@ -54,6 +58,7 @@ target_link_libraries(create_freq_index
   ${Boost_LIBRARIES}
   FastPFor_lib
   block_codecs
+  -lpthread
   )
 
 add_executable(create_wand_data create_wand_data.cpp)
