@@ -97,10 +97,8 @@ std::vector<term_id_vec> ReadQueries(char const * queryFileName)
     std::ifstream input(queryFileName);
     std::string line;
     term_id_vec queryVector;
-    std::cout << "Before while\n";
     while (std::getline(input, line))
     {
-        std::cout << "Read \"" << line << "\"\n";
         queryVector.clear();
         std::istringstream lineStream(line);
         term_id_type term;
@@ -110,7 +108,6 @@ std::vector<term_id_vec> ReadQueries(char const * queryFileName)
         }
         queries.push_back(queryVector);
     }
-    std::cout << "After while\n";
 
     return queries;
 }
@@ -130,20 +127,12 @@ int main(int argc, const char** argv)
     else
     {
         std::string type = argv[1];
-        const char* index_filename = nullptr; //argv[2];
+        const char* index_filename = argv[2]; //argv[2];
         char const * query_filename = argv[3];
         const char* wand_data_filename = nullptr;
 
         std::vector<term_id_vec> queries(ReadQueries(query_filename));
-        for (size_t i = 0; i < queries.size(); ++i)
-        {
-            term_id_vec q = queries[i];
-            for (size_t j = 0; j < q.size(); ++j)
-            {
-                std::cout << q[j] << " ";
-            }
-            std::cout << std::endl;
-        }
+        logger() << "Processing " << queries.size() << " queries." << std::endl;
 
         if (false) {
 #define LOOP_BODY(R, DATA, T)                                   \
