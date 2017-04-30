@@ -31,6 +31,7 @@
 
 #include "QueryLogRunnerBase.h"     // Base class.
 
+
 namespace quasi_succinct {
     typedef uint32_t term_id_type;
     typedef std::vector<term_id_type> term_id_vec;
@@ -39,9 +40,6 @@ namespace quasi_succinct {
 
 namespace BitFunnel
 {
-//    typedef quasi_succinct::term_id_vec QUERY;
-//    typedef int INDEX;
-
     template <typename INDEX>
     class QueryLogRunner : public QueryLogRunnerBase {
     public:
@@ -87,11 +85,8 @@ namespace BitFunnel
 
                     m_stopwatch.Reset();
 
-                    // Process query here.
+                    // Process query.
                     size_t matchCount = queryOperator(m_runner.m_index, m_runner.m_queries[queryIndex]);
-
-                    std::cout << "Process query " << queryIndex << std::endl;
-
                     m_runnerBase.m_results[queryIndex] = Result(matchCount, m_stopwatch.ElapsedTime());
                 }
             }

@@ -45,7 +45,8 @@ namespace BitFunnel {
 
         void Go(size_t threadCount);
 
-        void Write(std::ostream& out) const;
+        void WriteSummary(std::ostream& out) const;
+        void WriteQueryStatistics(std::ostream& out) const;
 
         virtual std::unique_ptr<QueryProcessorBase> CreateProcessor() = 0;
 
@@ -93,7 +94,7 @@ namespace BitFunnel {
                 return m_matchCount;
             }
 
-            size_t Timet() const
+            double Time() const
             {
                 return m_time;
             }
@@ -124,6 +125,9 @@ namespace BitFunnel {
         std::atomic<long long> m_measureQueryCount;
 
         std::vector<Result> m_results;
+
+        size_t m_threadCount;
+        double m_elapsedTime;
     };
 }
 

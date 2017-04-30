@@ -23,7 +23,6 @@
 #include <iostream>
 
 #include "QueryLogRunnerBase.h"
-#include "ThreadSynchronizer.h"
 
 
 namespace BitFunnel
@@ -52,6 +51,8 @@ namespace BitFunnel
         m_processors.clear();
         m_threads.clear();
 
+        m_threadCount = threadCount;
+
         // Create the query processors.
         for (size_t i = 0; i < threadCount; ++i)
         {
@@ -72,38 +73,46 @@ namespace BitFunnel
         }
 
         // TODO: rework synchronizers to get a tighter timing bound.
-        double elapsedTime = m_measureSynchronizer->GetElapsedTime();
+        m_elapsedTime = m_measureSynchronizer->GetElapsedTime();
+    }
 
+
+    void QueryLogRunnerBase::WriteSummary(std::ostream &out) const
+    {
         size_t failedQueryCount = 0;
+        double queryLatency = 0.0;
         for (size_t i = 0; i < m_results.size(); ++i)
         {
             if (!m_results[i].Succeeded())
             {
                 ++failedQueryCount;
             }
+            else
+            {
+                queryLatency += m_results[i].Time();
+            }
         }
-
-        std::cout << std::endl;
-        std::cout << "=======================================" << std::endl;
-        std::cout << std::endl;
+        queryLatency /= (m_results.size() - failedQueryCount);
 
         if (failedQueryCount > 0)
         {
-            std::cout << "WARNING: "
-                      << failedQueryCount
-                      << " queries failed."
-                      << std::endl
-                      << std::endl;
+            out << "WARNING: "
+                << failedQueryCount
+                << " queries failed."
+                << std::endl
+                << std::endl;
         }
 
-        std::cout << "Thread count: " << threadCount << std::endl;
-        std::cout << "Query count: " << m_results.size() << std::endl;
-        std::cout << "Total time: " << elapsedTime << std::endl;
-        std::cout << "QPS: " << m_results.size() / elapsedTime << std::endl;
+        out << "Thread count: " << m_threadCount << std::endl;
+        out << "Query count: " << m_results.size() << std::endl;
+        out << "Total time: " << m_elapsedTime << std::endl;
+        out << "Mean query latency: " << queryLatency << std::endl;
+        out << "QPS: " << m_results.size() / m_elapsedTime << std::endl;
+        out << std::endl;
     }
 
 
-    void QueryLogRunnerBase::Write(std::ostream &out) const
+    void QueryLogRunnerBase::WriteQueryStatistics(std::ostream &out) const
     {
         for (size_t i = 0; i < m_results.size(); ++i)
         {
