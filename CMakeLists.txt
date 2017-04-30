@@ -50,8 +50,9 @@ add_library(block_codecs
   integer_encoding_library/src/compress/table/decGamma.cpp
   integer_encoding_library/src/compress/table/decDelta.cpp
   integer_encoding_library/src/io/BitsReader.cpp
-  integer_encoding_library/src/io/BitsWriter.cpp
-  )
+  integer_encoding_library/src/io/BitsWriter.cpp)
+
+add_subdirectory(Runner)
 
 add_executable(create_freq_index create_freq_index.cpp)
 target_link_libraries(create_freq_index

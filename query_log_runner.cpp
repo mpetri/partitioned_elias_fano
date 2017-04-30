@@ -1,4 +1,3 @@
-
 #include <chrono>
 #include <iostream>
 
@@ -6,7 +5,7 @@
 
 #include "index_types.hpp"
 #include "wand_data.hpp"
-#include "queries.hpp"
+#include "queries.hpp"      // TODO: query_log_runner.h? Also rename to .hpp?
 #include "util.hpp"
 
 template <typename QueryOperator, typename IndexType>
