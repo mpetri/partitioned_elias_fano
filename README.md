@@ -19,7 +19,12 @@ make
 
 Running Performance Test
 ------------------------
-First generate an index using `create_freq_index`.
+First generate an index using `create_freq_index`. One way to create
+the collection file used as input is to use the 'IndexExporter' class
+in the [mg4j-workbench](https://github.com/BitFunnel/mg4j-workbench) project.
+One can use mg4j to generate an index, from say the gov2 corpus, and then export
+this index and an accompanying query log to format usable by
+`create_freq_index` and `Runner`.
 
 ~~~
 Usage:
