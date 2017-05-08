@@ -30,7 +30,11 @@ if (UNIX)
 
    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -ggdb") # Add debug info anyway
 
+   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2")
+
 endif()
+
+message(STATUS "Compiler flags ${CMAKE_CXX_FLAGS}")
 
 find_package(Boost 1.42.0 COMPONENTS iostreams unit_test_framework REQUIRED)
 include_directories(${Boost_INCLUDE_DIRS})
