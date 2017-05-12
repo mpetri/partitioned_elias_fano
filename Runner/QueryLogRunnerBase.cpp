@@ -81,6 +81,7 @@ namespace BitFunnel
     {
         size_t failedQueryCount = 0;
         double queryLatency = 0.0;
+	size_t matchCount = 0;
         for (size_t i = 0; i < m_results.size(); ++i)
         {
             if (!m_results[i].Succeeded())
@@ -90,6 +91,7 @@ namespace BitFunnel
             else
             {
                 queryLatency += m_results[i].Time();
+		matchCount += m_results[i].MatchCount();
             }
         }
         queryLatency /= (m_results.size() - failedQueryCount);
@@ -105,9 +107,11 @@ namespace BitFunnel
 
         out << "Thread count: " << m_threadCount << std::endl;
         out << "Query count: " << m_results.size() << std::endl;
+	out << "Match count: " << matchCount << std::endl;
         out << "Total time: " << m_elapsedTime << std::endl;
         out << "Mean query latency: " << queryLatency << std::endl;
         out << "QPS: " << m_results.size() / m_elapsedTime << std::endl;
+        out << "MPS: " << matchCount / m_elapsedTime << std::endl;
         out << std::endl;
     }
 
