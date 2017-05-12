@@ -112,6 +112,7 @@ namespace BitFunnel
         out << "Mean query latency: " << queryLatency << std::endl;
         out << "QPS: " << m_results.size() / m_elapsedTime << std::endl;
         out << "MPS: " << matchCount / m_elapsedTime << std::endl;
+	out << "MPQ: " << static_cast<double>(matchCount) / m_results.size();
         out << std::endl;
     }
 
