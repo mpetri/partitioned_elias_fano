@@ -50,6 +50,7 @@ add_subdirectory(FastPFor EXCLUDE_FROM_ALL)
 include_directories(${INDEX_PARTITIONING_SOURCE_DIR}/integer_encoding_library/include)
 add_library(block_codecs
   block_codecs.cpp
+  compress_integer_qmx_improved.cpp
   integer_encoding_library/src/compress/table/decUnary.cpp
   integer_encoding_library/src/compress/table/decGamma.cpp
   integer_encoding_library/src/compress/table/decDelta.cpp
